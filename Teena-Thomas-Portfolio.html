@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teena Thomas — iOS Engineer / AI Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E1015;
+    --surface: #171A22;
+    --surface-2: #1D212B;
+    --line: #2A2F3B;
+    --text: #F3F1EA;
+    --muted: #8B90A0;
+    --ios: #FA7343;
+    --ios-dim: #FA734322;
+    --ai: #4FD6C4;
+    --ai-dim: #4FD6C422;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ios); color:#0E1015;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+
+  /* subtle grid texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size:48px 48px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 32px; position:relative; z-index:1;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(14,16,21,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:18px 32px;}
+  .logo{font-family:'JetBrains Mono', monospace; font-weight:600; font-size:14px; letter-spacing:0.02em;}
+  .logo span{color:var(--ios);}
+  .navlinks{display:flex; gap:28px; font-family:'JetBrains Mono', monospace; font-size:12.5px; text-transform:lowercase; color:var(--muted);}
+  .navlinks a{text-decoration:none; transition:color .2s;}
+  .navlinks a:hover{color:var(--text);}
+  .navlinks a:focus-visible, a:focus-visible{outline:2px solid var(--ai); outline-offset:3px; border-radius:2px;}
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:110px 0 90px; position:relative;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px; color:var(--ai);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:26px;
+  }
+  .eyebrow::before{content:"●"; color:#4ADE80; font-size:9px; animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+  h1.name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(44px, 7vw, 76px);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  h1.name .accent{
+    font-style:italic;
+    font-weight:400;
+    background:linear-gradient(90deg, var(--ios), var(--ai));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    font-size:19px;
+    color:#C9CCD6;
+    max-width:560px;
+    margin-bottom:36px;
+  }
+  .hero-sub b{color:var(--text); font-weight:600;}
+
+  .hero-meta{display:flex; flex-wrap:wrap; gap:22px; font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--muted); margin-bottom:40px;}
+  .hero-meta a{text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s, color .2s;}
+  .hero-meta a:hover{color:var(--text); border-color:var(--muted);}
+
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    padding:13px 22px;
+    border-radius:999px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary{background:var(--ios); color:#14100D; font-weight:600;}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(250,115,67,0.3);}
+  .btn-ghost{border:1px solid var(--line); color:var(--text);}
+  .btn-ghost:hover{transform:translateY(-2px); border-color:var(--ai); color:var(--ai);}
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:90px 0; border-top:1px solid var(--line);}
+  .sec-head{margin-bottom:52px;}
+  .sec-num{font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted); margin-bottom:12px; display:block;}
+  .sec-title{font-family:'Fraunces', serif; font-size:clamp(28px,4vw,38px); font-weight:600; letter-spacing:-0.01em;}
+  .sec-title .i{color:var(--ios);}
+  .sec-title .a{color:var(--ai);}
+  .sec-desc{color:var(--muted); max-width:540px; margin-top:14px; font-size:15.5px;}
+
+  /* ---------- GRAPH (signature element) ---------- */
+  .graph-shell{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:44px 40px 36px;
+    overflow-x:auto;
+  }
+  .graph-legend{display:flex; gap:26px; margin-bottom:8px; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted);}
+  .legend-dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:7px; vertical-align:middle;}
+  svg.branchgraph{display:block; width:100%; min-width:640px; height:auto;}
+  .node-label{font-family:'Inter',sans-serif; font-size:13.5px; fill:var(--text); font-weight:500;}
+  .node-date{font-family:'JetBrains Mono', monospace; font-size:11px; fill:var(--muted);}
+  .node-sub{font-family:'Inter',sans-serif; font-size:12px; fill:var(--muted);}
+
+  /* ---------- EXPERIENCE ---------- */
+  .xp{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:30px 32px;
+    background:var(--surface);
+    margin-bottom:18px;
+    position:relative;
+  }
+  .xp-top{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:14px;}
+  .xp-role{font-family:'Fraunces', serif; font-size:21px; font-weight:600;}
+  .xp-date{font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--ios);}
+  .xp-org{color:var(--muted); font-size:14px; margin-bottom:16px;}
+  .xp ul{list-style:none;}
+  .xp li{position:relative; padding-left:20px; margin-bottom:10px; font-size:14.5px; color:#D5D8E0;}
+  .xp li::before{content:"—"; position:absolute; left:0; color:var(--line); color:#454B5C;}
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{display:grid; grid-template-columns:1fr; gap:20px;}
+  .proj{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--surface);
+    padding:32px;
+    transition:border-color .2s, transform .2s;
+  }
+  .proj:hover{transform:translateY(-3px);}
+  .proj.flagship{border-color:var(--ai); background:linear-gradient(160deg, var(--surface) 60%, var(--ai-dim));}
+  .proj.flagship:hover{box-shadow:0 12px 30px rgba(79,214,196,0.12);}
+  .proj-top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:12px;}
+  .proj-title{font-family:'Fraunces', serif; font-size:22px; font-weight:600;}
+  .proj-flag{font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--ai); border:1px solid var(--ai); border-radius:999px; padding:4px 10px; white-space:nowrap;}
+  .proj-desc{color:#C9CCD6; font-size:14.5px; margin-bottom:18px;}
+  .tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    padding:5px 10px; border-radius:6px;
+    background:var(--ios-dim); color:var(--ios); border:1px solid rgba(250,115,67,0.25);
+  }
+  .tag.ai{background:var(--ai-dim); color:var(--ai); border-color:rgba(79,214,196,0.25);}
+  .tag.neutral{background:var(--surface-2); color:var(--muted); border-color:var(--line);}
+
+  /* ---------- SKILLS ---------- */
+  .skill-cols{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .skill-col{border:1px solid var(--line); border-radius:var(--radius); padding:28px; background:var(--surface);}
+  .skill-col.ios{border-top:3px solid var(--ios);}
+  .skill-col.ai{border-top:3px solid var(--ai);}
+  .skill-col h3{font-family:'JetBrains Mono', monospace; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:18px;}
+  .skill-col.ios h3{color:var(--ios);}
+  .skill-col.ai h3{color:var(--ai);}
+  .skill-list{list-style:none; display:flex; flex-direction:column; gap:10px;}
+  .skill-list li{font-size:14.5px; color:#D5D8E0; display:flex; align-items:center; gap:10px;}
+  .skill-list li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--muted); flex-shrink:0;}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-row{display:flex; justify-content:space-between; align-items:baseline; padding:20px 0; border-bottom:1px solid var(--line); flex-wrap:wrap; gap:6px;}
+  .edu-row:last-child{border-bottom:none;}
+  .edu-deg{font-weight:600; font-size:15.5px;}
+  .edu-school{color:var(--muted); font-size:13.5px;}
+  .edu-date{font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted);}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:80px 0 60px; text-align:center;}
+  footer .sec-title{margin-bottom:20px;}
+  .footer-links{display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-top:28px; font-family:'JetBrains Mono', monospace; font-size:13px;}
+  .footer-links a{text-decoration:none; color:var(--muted); border-bottom:1px solid transparent; transition:.2s;}
+  .footer-links a:hover{color:var(--text); border-color:var(--ai);}
+  .fine{margin-top:50px; font-family:'JetBrains Mono', monospace; font-size:11.5px; color:#4C5162;}
+
+  @media (max-width:760px){
+    .navlinks{display:none;}
+    .skill-cols{grid-template-columns:1fr;}
+    header.hero{padding:80px 0 60px;}
+    section{padding:64px 0;}
+    .xp-top{flex-direction:column;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">teena<span>.</span>thomas</div>
+    <div class="navlinks">
+      <a href="#path">career path</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">open to new roles · ernakulam, kerala</div>
+    <h1 class="name">Teena Thomas<br><span class="accent">iOS engineer, becoming an AI builder.</span></h1>
+    <p class="hero-sub">Five years shipping native iOS apps in <b>Swift</b> and <b>SwiftUI</b> — now extending that craft into <b>LangChain</b>, <b>RAG</b>, and applied ML. I build the interface and the intelligence behind it.</p>
+    <div class="hero-meta">
+      <a href="mailto:teenathomas2017@gmail.com">teenathomas2017@gmail.com</a>
+      <a href="tel:+917510853612">+91 7510853612</a>
+      <a href="https://www.linkedin.com/in/t1t" target="_blank" rel="noopener">linkedin.com/in/t1t</a>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">See the work →</a>
+      <a class="btn btn-ghost" href="mailto:teenathomas2017@gmail.com">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<section id="path">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01 — the build log</span>
+      <h1 class="sec-title">Two branches, <span class="i">one</span> <span class="a">codebase</span></h1>
+      <p class="sec-desc">My career reads like a commit history: a steady main branch in iOS, and a feature branch in AI that's about to merge.</p>
+    </div>
+
+    <div class="graph-shell">
+      <div class="graph-legend">
+        <span><span class="legend-dot" style="background:var(--ios)"></span>iOS / mobile</span>
+        <span><span class="legend-dot" style="background:var(--ai)"></span>AI / ML</span>
+      </div>
+      <svg class="branchgraph" viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg">
+        <!-- main line (iOS) -->
+        <line x1="60" y1="40" x2="60" y2="320" stroke="#FA7343" stroke-width="2.5"/>
+        <!-- ai branch curve: diverges around y=180, rejoins near y=300 -->
+        <path d="M 60 190 C 60 220, 260 220, 260 250 L 260 320" fill="none" stroke="#4FD6C4" stroke-width="2.5"/>
+        <path d="M 60 190 C 60 220, 260 220, 260 250" fill="none" stroke="#4FD6C4" stroke-width="2.5" stroke-dasharray="0"/>
+
+        <!-- node: education -->
+        <circle cx="60" cy="40" r="7" fill="#0E1015" stroke="#FA7343" stroke-width="2.5"/>
+        <text x="80" y="36" class="node-label">Master of Computer Applications</text>
+        <text x="80" y="54" class="node-sub">Amal Jyothi College of Engineering</text>
+        <text x="740" y="44" class="node-date" text-anchor="start">2016 – 2021</text>
+
+        <!-- node: internship -->
+        <circle cx="60" cy="110" r="7" fill="#0E1015" stroke="#FA7343" stroke-width="2.5"/>
+        <text x="80" y="106" class="node-label">Internship — Feathersoft</text>
+        <text x="80" y="124" class="node-sub">Swift, MVC → MVVM, Core Data</text>
+        <text x="740" y="114" class="node-date" text-anchor="start">Oct 2021</text>
+
+        <!-- node: SE role -->
+        <circle cx="60" cy="190" r="7" fill="#0E1015" stroke="#FA7343" stroke-width="2.5"/>
+        <text x="80" y="186" class="node-label">Software Engineer — Feathersoft</text>
+        <text x="80" y="204" class="node-sub">SwiftUI, MVVM architecture, Core Data</text>
+        <text x="740" y="194" class="node-date" text-anchor="start">Feb 2022</text>
+
+        <!-- ai branch node -->
+        <circle cx="260" cy="250" r="7" fill="#0E1015" stroke="#4FD6C4" stroke-width="2.5"/>
+        <text x="280" y="246" class="node-label" fill="#F3F1EA">AI Clinical Assistant</text>
+        <text x="280" y="264" class="node-sub">LangChain · RAG · Supabase · Python ML</text>
+        <text x="740" y="254" class="node-date" text-anchor="start">2025</text>
+
+        <!-- node: current -->
+        <circle cx="60" cy="280" r="7" fill="#0E1015" stroke="#FA7343" stroke-width="2.5"/>
+        <text x="80" y="276" class="node-label">EZCapture, Workjoe, Medgenome</text>
+        <text x="80" y="294" class="node-sub">Production iOS apps, shipped &amp; maintained</text>
+
+        <!-- merge / future node -->
+        <circle cx="160" cy="320" r="8" fill="#0E1015" stroke="#F3F1EA" stroke-width="2" stroke-dasharray="3 3"/>
+        <text x="182" y="316" class="node-label">Next: AI-native mobile products</text>
+        <text x="182" y="334" class="node-sub">Where both branches converge</text>
+        <line x1="60" y1="280" x2="160" y2="320" stroke="#FA7343" stroke-width="2.5"/>
+        <line x1="260" y1="320" x2="160" y2="320" stroke="#4FD6C4" stroke-width="2.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02 — experience</span>
+      <h1 class="sec-title">Where the work happened</h1>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="xp-role">Software Engineer</div>
+        <div class="xp-date mono">Feb 2022 — Present</div>
+      </div>
+      <div class="xp-org">Feathersoft Info Solutions Pvt Ltd</div>
+      <ul>
+        <li>Built and maintained iOS applications in Objective-C and Swift across the full development lifecycle, using Cocoa Touch and Xcode.</li>
+        <li>Designed local data persistence with Core Data for reliable storage, retrieval, and app performance.</li>
+        <li>Developed clean, responsive SwiftUI interfaces aligned to Apple's Human Interface Guidelines.</li>
+        <li>Led the shift to MVVM architecture, improving code organization, scalability, and testability.</li>
+        <li>Separated business logic from UI layers to raise maintainability and overall code quality.</li>
+      </ul>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="xp-role">iOS Development Intern</div>
+        <div class="xp-date mono">Oct 2021 — Feb 2022</div>
+      </div>
+      <div class="xp-org">Feathersoft Info Solutions Pvt Ltd</div>
+      <ul>
+        <li>Built iOS features in Swift following MVC and MVVM patterns for clean, maintainable code.</li>
+        <li>Implemented Core Data for local persistence, including CRUD operations and data modeling.</li>
+        <li>Partnered with the dev team to debug, optimize performance, and refine UI/UX against iOS best practices.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03 — projects</span>
+      <h1 class="sec-title">Selected <span class="i">apps</span> &amp; <span class="a">experiments</span></h1>
+    </div>
+
+    <div class="proj-grid">
+      <div class="proj flagship">
+        <div class="proj-top">
+          <div class="proj-title">AI Clinical Assistant</div>
+          <div class="proj-flag">flagship · AI/ML</div>
+        </div>
+        <p class="proj-desc">A full-stack, AI-powered healthcare platform with role-specific modules for doctors, patients, and administrators. Built an intelligent chatbot on LangChain and Retrieval-Augmented Generation, grounded in real clinical knowledge bases, with a SwiftUI front end and Python ML microservices supporting decision-making workflows.</p>
+        <div class="tags">
+          <span class="tag ai">LangChain</span>
+          <span class="tag ai">RAG</span>
+          <span class="tag ai">Python ML</span>
+          <span class="tag ai">Supabase</span>
+          <span class="tag">SwiftUI</span>
+          <span class="tag neutral">Role-based access</span>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <div class="proj-title">EZCapture</div>
+        </div>
+        <p class="proj-desc">Agriculture analytics app for iPad and iPhone, tracking full plant growth lifecycles to support new crop hybrid research. Built a custom camera module on AVCaptureSession for high-quality field data capture, plus multilingual support for regional accessibility.</p>
+        <div class="tags">
+          <span class="tag">AVCaptureSession</span>
+          <span class="tag">Swift</span>
+          <span class="tag neutral">Localization</span>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <div class="proj-title">Workjoe</div>
+        </div>
+        <p class="proj-desc">Internal employee management app for leaves, shifts, timesheets, on-duty requests, attendance, and holidays. Migrated the codebase from MVC to MVVM and introduced Combine for reactive, asynchronous state management.</p>
+        <div class="tags">
+          <span class="tag">MVVM</span>
+          <span class="tag">Combine</span>
+          <span class="tag neutral">Internal tooling</span>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <div class="proj-title">Medgenome</div>
+        </div>
+        <p class="proj-desc">Redesigned roughly 80% of the app's interface for a more intuitive, visually consistent experience, and reworked navigation and layout for better usability across screen sizes.</p>
+        <div class="tags">
+          <span class="tag">UI redesign</span>
+          <span class="tag neutral">Navigation &amp; layout</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">04 — skills</span>
+      <h1 class="sec-title">The <span class="i">stack</span> and the <span class="a">stretch</span></h1>
+    </div>
+    <div class="skill-cols">
+      <div class="skill-col ios">
+        <h3>iOS &amp; mobile</h3>
+        <ul class="skill-list">
+          <li>Swift programming</li>
+          <li>SwiftUI &amp; Cocoa Touch</li>
+          <li>MVVM and MVC architecture</li>
+          <li>Core Data management</li>
+          <li>Combine framework</li>
+          <li>CocoaPods &amp; Carthage</li>
+          <li>Firebase integration</li>
+          <li>Performance optimization</li>
+        </ul>
+      </div>
+      <div class="skill-col ai">
+        <h3>AI &amp; ML</h3>
+        <ul class="skill-list">
+          <li>Python programming</li>
+          <li>LangChain &amp; RAG pipelines</li>
+          <li>Machine learning fundamentals</li>
+          <li>Generative AI / LLMs</li>
+          <li>Prompt engineering</li>
+          <li>Supabase (backend &amp; storage)</li>
+          <li>Version control with Git</li>
+          <li>Continuous integration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">05 — education</span>
+      <h1 class="sec-title">Foundations</h1>
+    </div>
+    <div class="edu-row">
+      <div>
+        <div class="edu-deg">Master of Computer Applications</div>
+        <div class="edu-school">Amal Jyothi College of Engineering</div>
+      </div>
+      <div class="edu-date">2016 — 2021</div>
+    </div>
+    <div class="edu-row">
+      <div>
+        <div class="edu-deg">Higher Secondary School</div>
+        <div class="edu-school">SVRV NSS Vazhoor</div>
+      </div>
+      <div class="edu-date">2014 — 2016</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="sec-num">06 — contact</span>
+    <h1 class="sec-title">Let's build the merge<br>commit together.</h1>
+    <div class="cta-row" style="justify-content:center; margin-top:30px;">
+      <a class="btn btn-primary" href="mailto:teenathomas2017@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/t1t" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:teenathomas2017@gmail.com">teenathomas2017@gmail.com</a>
+      <a href="tel:+917510853612">+91 7510853612</a>
+      <a href="https://www.linkedin.com/in/t1t" target="_blank" rel="noopener">linkedin.com/in/t1t</a>
+    </div>
+    <div class="fine">Ernakulam, Kerala · Built with intent, one commit at a time.</div>
+  </div>
+</footer>
+
+</body>
+</html>
